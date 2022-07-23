@@ -1,6 +1,6 @@
 import { NativeBaseProvider, StatusBar } from 'native-base';
-import { Home } from './src/screens/Home'
 import { THEME } from './src/styles/theme';
+import { Register } from './src/screens/Register'
 import { Loading } from './src/components/Loading';
 import {useFonts,Roboto_400Regular, Roboto_700Bold} from '@expo-google-fonts/roboto';
 
@@ -14,7 +14,7 @@ export default function App() {
         translucent
       
       />
-      { fontLoaded ? <Home /> : <Loading/>}
+      { fontLoaded ? <Register /> : <Loading/>}
     </NativeBaseProvider>
 
   );
