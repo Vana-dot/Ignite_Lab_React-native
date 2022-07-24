@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigation} from '@react-navigation/native';
 import { HStack, IconButton, VStack, useTheme, Text, Heading, FlatList, Center} from 'native-base';
 import Logo from '../assets/logo_secondary.svg';
 import {ChatTeardropText, SignOut} from 'phosphor-react-native';
@@ -12,11 +13,27 @@ import { Button } from '../components/Button';
 export function Home() {
   const [statusSelected, setStatusSelected] = useState<'open' | 'closed'>('open');
   
-  const [ordens, setOrdens] = useState<OrderProps[]>([]);
+  const [ordens, setOrdens] = useState<OrderProps[]>([
+    {
+      id: '12356',
+      patrimony: '12335',
+      when: '13/05/2022 às 14h',
+      status: 'open'
+    }
+
+  ]);
   
   const {colors} = useTheme();
   
+  const navigation = useNavigation();
+
+  function handleNewOrder(){
+    navigation.navigate('new');
+  }
   
+  function handleOpenDetails(orderId: string ){
+     navigation.navigate('details', {orderId});
+  }
   return (
     <VStack flex={1} pb={6} bg="gray.700">
       <HStack
@@ -64,7 +81,7 @@ export function Home() {
         <FlatList
           data={ordens}
           keyExtractor={item => item.id}
-          renderItem={({item}) => <Order data={item}/>}
+          renderItem={({item}) => <Order data={item} onPress={() => handleOpenDetails(item.id)}/>}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingBottom:100}}
           ListEmptyComponent={() => (
@@ -80,7 +97,7 @@ export function Home() {
           )}
          />
          
-        <Button title="Nova solicitação"/>
+        <Button title="Nova solicitação" onPress={handleNewOrder}/>
       </VStack>
 
       
